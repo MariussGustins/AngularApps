@@ -1,0 +1,16 @@
+<!-- house-detail.component.html -->
+<p>house detail works</p>
+<div *ngIf="house">
+  <h2>House Details</h2>
+  <p><strong>House Number:</strong> {{ house.number }}</p>
+  <p><strong>Street:</strong> {{ house.street }}</p>
+  <p><strong>City:</strong> {{ house.city }}</p>
+  <p><strong>Country:</strong> {{ house.country }}</p>
+  <p><strong>Postcode:</strong> {{ house.postcode }}</p>
+
+  <!-- Add edit functionality or other details here -->
+</div>
+
+<div *ngIf="!house">
+  <p>Loading house details...</p>
+</div>
