@@ -32,20 +32,32 @@
     </table>
 </div>
 
-<div *ngIf="apartment.residents.length > 0">
-  <h3>Residents</h3>
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let resident of apartment.residents">
-      {{ resident.name }} (Age: {{ resident.lastName }})
-    </li>
-  </ul>
-</div>
-<div *ngIf="!apartment.residents || apartment.residents.length === 0">
-  <p>No residents assigned to this apartment.</p>
-</div>
 
-</div>
+<div class="mt-4">
+    <h3>Residents</h3>
+    <div *ngIf="apartmentResidents.length > 0; else noResidents">
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Last Name</th>
+            <!-- Add more columns as needed -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let resident of apartmentResidents">
+            <td>{{ resident.name }}</td>
+            <td>{{ resident.lastName }}</td>
+            <!-- Add more columns as needed -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noResidents>
+      <p>No residents assigned to this apartment.</p>
+    </ng-template>
+  </div>
 
 <div *ngIf="!apartment">
-<p>Loading apartment details...</p>
+  <p>Loading apartment details...</p>
 </div>

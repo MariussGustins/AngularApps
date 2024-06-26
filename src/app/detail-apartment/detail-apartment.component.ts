@@ -14,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailApartmentComponent implements OnInit {
   apartment: Apartment | null = null;
+  apartmentResidents: Resident[] =[];
+  apartmentId: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,20 +23,33 @@ export class DetailApartmentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchApartmentDetails();
-  }
-
-  fetchApartmentDetails(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.allHousesService.getApartmentById(id).subscribe(
-        (data) => {
-          this.apartment = data;
-        },
-        (error) => {
-          console.error('Error fetching apartment details', error);
-        }
-      );
+      this.apartmentId = id;
+      this.fetchApartmentDetails(this.apartmentId);
+      this.fetchResidentsByApartmentId(this.apartmentId);
     }
+  }
+
+  fetchApartmentDetails(id: string): void {
+    this.allHousesService.getApartmentById(id).subscribe(
+      (data: Apartment) => {
+        this.apartment = data;
+      },
+      (error: any) => {
+        console.error('Error fetching apartment details', error);
+      }
+    );
+  }
+
+  fetchResidentsByApartmentId(apartmentId: string): void {
+    this.allHousesService.getResidentsByApartmentId(apartmentId).subscribe(
+      (data: Resident[]) => {
+        this.apartmentResidents = data;
+      },
+      (error: any) => {
+        console.error('Error fetching residents by apartment id', error);
+      }
+    );
   }
 }

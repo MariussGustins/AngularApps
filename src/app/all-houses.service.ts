@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
-import { Houses, Apartment } from './allHouses.interface';
+import { Houses, Apartment, Resident } from './allHouses.interface';
 import { map } from 'rxjs/operators';
 
 
@@ -30,5 +30,8 @@ export class AllHousesService {
   }
   getApartmentById(id: string): Observable<Apartment>{
     return this.http.get<Apartment>(`${this.baseUrl}/Apartments/${id}`);
+  }
+  getResidentsByApartmentId(apartmentId: string): Observable<Resident[]> {
+    return this.http.get<Resident[]>(`${this.baseUrl}/Apartments/${apartmentId}/Residents?apartmentId=${apartmentId}`);
   }
 }
