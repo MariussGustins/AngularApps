@@ -1,7 +1,7 @@
-
+<h1>All houses registered to database</h1>
 <div>
-  <table class="table table-dark table-striped">
-    <thead>
+  <table class="table">
+    <thead class="table-dark">
     <tr>
       <th scope="col">House Number</th>
       <th scope="col">Street</th>
@@ -18,7 +18,7 @@
       <td>{{ house.city }}</td>
       <td>{{ house.country }}</td>
         <td>{{ house.postcode }}</td>
-        <td><a [routerLink]="['/house', house.id]">View Details</a></td>    </tr>
+        <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" [routerLink]="['/house', house.id]">View Details</a></td>    </tr>
     </tbody>
   </table>
 </div>

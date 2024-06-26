@@ -9,7 +9,25 @@ export interface Houses{
 }
 
 export interface Apartment {
-  id: number;
+  id: string;
   number: string;
   floor: number;
+  rooms: number;
+  numberOfResidents: number;
+  fullArea: number;
+  livingArea: number;
+  primaryResidentId: number;
+  residents: Resident[];
+
+}
+
+export interface Resident{
+  id:string;
+  name:string;
+  lastName:string;
+  personalNumber:string;
+  birthday: Date;
+  phoneNumber: number;
+  email:string;
+  isOwner: boolean;
 }

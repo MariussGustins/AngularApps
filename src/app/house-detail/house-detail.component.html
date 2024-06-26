@@ -1,46 +1,59 @@
-<!-- house-detail.component.html -->
 <div class="container mt-4">
   <div *ngIf="houseDetails">
     <h2>House Details</h2>
 
-    <!-- House Details Table -->
     <div class="table-responsive">
       <table class="table table-bordered">
         <tbody>
-        <tr>
-          <td class="fw-bold">House Number:</td>
-          <td>{{ houseDetails.number }}</td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Street:</td>
-          <td>{{ houseDetails.street }}</td>
-        </tr>
-        <tr>
-          <td class="fw-bold">City:</td>
-          <td>{{ houseDetails.city }}</td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Country:</td>
-          <td>{{ houseDetails.country }}</td>
-        </tr>
-        <tr>
-          <td class="fw-bold">Postcode:</td>
-          <td>{{ houseDetails.postcode }}</td>
-        </tr>
+          <tr>
+            <td class="fw-bold">House Number:</td>
+            <td>{{ houseDetails.number }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Street:</td>
+            <td>{{ houseDetails.street }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">City:</td>
+            <td>{{ houseDetails.city }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Country:</td>
+            <td>{{ houseDetails.country }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Postcode:</td>
+            <td>{{ houseDetails.postcode }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- List of Apartments -->
     <div class="mt-4">
       <h3>Apartments Assigned to This House</h3>
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor="let apartment of houseDetails.apartments">
-          Apartment Number: {{ apartment.number }} - Floor: {{ apartment.floor }}
-        </li>
-      </ul>
+      <div *ngIf="houseApartments.length > 0; else noApartments">
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th>Apartment Number</th>
+              <th>Floor</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let apartment of houseApartments">
+              <td>{{ apartment.number }}</td>
+              <td>{{ apartment.floor }}</td>
+              <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" [routerLink]="['/apartment', apartment.id]">View Details</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noApartments>
+        <p>No apartments assigned to this house.</p>
+      </ng-template>
     </div>
-  </div>
+
   <div *ngIf="!houseDetails">
     <p>Loading house details...</p>
   </div>

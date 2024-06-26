@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AllHousesService } from '../all-houses.service';
-import { Houses } from '../allHouses.interface';
+import { Houses, Apartment } from '../allHouses.interface';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -10,11 +10,13 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './house-detail.component.html',
-  styleUrls: ['./house-detail.component.css'] // Changed 'styleUrl' to 'styleUrls'
+  styleUrls: ['./house-detail.component.css'] 
 })
 export class HouseDetailComponent implements OnInit {
-  houseId: string | null = null; // Allow houseId to be null
-  houseDetails: Houses | null = null; // House details will be fetched based on houseId
+  houseId: string = '';
+  houseDetails!: Houses;
+  houseApartments: Apartment[] = [];
+  allApartments: Apartment[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -22,16 +24,35 @@ export class HouseDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.houseId = this.route.snapshot.paramMap.get('id');
-    if (this.houseId) {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.houseId = id; 
       this.fetchHouseDetails(this.houseId);
+      this.fetchAllApartments();
+      this.fetchApartmentsByHouseId(this.houseId);
     }
   }
 
   fetchHouseDetails(id: string): void {
     this.allHousesService.getHouseById(id).subscribe(
-      (data: Houses) => this.houseDetails = data,
-      error => console.error('Error fetching house details', error)
+      (data: Houses) => {
+        this.houseDetails = data;
+      },
+      (error: any) => console.error('Error fetching house details', error)
+    );
+  }
+
+  fetchAllApartments(): void {
+    this.allHousesService.getAllApartments().subscribe(
+      (data: Apartment[]) => this.allApartments = data,
+      (error: any) => console.error('Error fetching all apartments', error)
+    );
+  }
+
+  fetchApartmentsByHouseId(houseId: string): void {
+    this.allHousesService.getApartmentsByHouseId(houseId).subscribe(
+      (data: Apartment[]) => this.houseApartments = data,
+      (error: any) => console.error('Error fetching apartments by house id', error)
     );
   }
 }

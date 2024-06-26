@@ -1,0 +1,51 @@
+
+<div class="container mt-4" *ngIf="apartment">
+    <h2>Apartment Details</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td class="fw-bold">Apartment Number:</td>
+            <td>{{ apartment.number }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Floor:</td>
+            <td>{{ apartment.floor }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Rooms:</td>
+            <td>{{ apartment.rooms }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Number of residents:</td>
+            <td>{{ apartment.numberOfResidents }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Full area:</td>
+            <td>{{ apartment.fullArea }}</td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Living area:</td>
+            <td>{{ apartment.livingArea }}</td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="apartment.residents.length > 0">
+  <h3>Residents</h3>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let resident of apartment.residents">
+      {{ resident.name }} (Age: {{ resident.lastName }})
+    </li>
+  </ul>
+</div>
+<div *ngIf="!apartment.residents || apartment.residents.length === 0">
+  <p>No residents assigned to this apartment.</p>
+</div>
+
+</div>
+
+<div *ngIf="!apartment">
+<p>Loading apartment details...</p>
+</div>
