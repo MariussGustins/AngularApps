@@ -1,7 +1,6 @@
 <!-- house-detail.component.html -->
-
 <div class="container mt-4">
-  <div *ngIf="house">
+  <div *ngIf="houseDetails">
     <h2>House Details</h2>
 
     <!-- House Details Table -->
@@ -10,23 +9,23 @@
         <tbody>
         <tr>
           <td class="fw-bold">House Number:</td>
-          <td>{{ house.number }}</td>
+          <td>{{ houseDetails.number }}</td>
         </tr>
         <tr>
           <td class="fw-bold">Street:</td>
-          <td>{{ house.street }}</td>
+          <td>{{ houseDetails.street }}</td>
         </tr>
         <tr>
           <td class="fw-bold">City:</td>
-          <td>{{ house.city }}</td>
+          <td>{{ houseDetails.city }}</td>
         </tr>
         <tr>
           <td class="fw-bold">Country:</td>
-          <td>{{ house.country }}</td>
+          <td>{{ houseDetails.country }}</td>
         </tr>
         <tr>
           <td class="fw-bold">Postcode:</td>
-          <td>{{ house.postcode }}</td>
+          <td>{{ houseDetails.postcode }}</td>
         </tr>
         </tbody>
       </table>
@@ -36,13 +35,13 @@
     <div class="mt-4">
       <h3>Apartments Assigned to This House</h3>
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let apartment of house.apartments">
+        <li class="list-group-item" *ngFor="let apartment of houseDetails.apartments">
           Apartment Number: {{ apartment.number }} - Floor: {{ apartment.floor }}
         </li>
       </ul>
     </div>
-
-  <div *ngIf="!house">
+  </div>
+  <div *ngIf="!houseDetails">
     <p>Loading house details...</p>
   </div>
 </div>

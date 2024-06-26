@@ -15,7 +15,7 @@ export class AllHousesService {
   getAllHouses(): Observable<Houses[]> {
     return this.http.get<Houses[]>(`${this.baseUrl}/Houses`);
   }
-  getHouseById(id: number): Observable<Houses> {
+  getHouseById(id: string): Observable<Houses> {
     return this.http.get<Houses>(`${this.baseUrl}/Houses/${id}`).pipe(
       map((data: any) => ({
         id: data.id,

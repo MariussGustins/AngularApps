@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AllHousesService } from '../all-houses.service';
 import { Houses } from '../allHouses.interface';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,10 +10,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './house-detail.component.html',
-  styleUrl: './house-detail.component.css'
+  styleUrls: ['./house-detail.component.css'] // Changed 'styleUrl' to 'styleUrls'
 })
 export class HouseDetailComponent implements OnInit {
-  house!: Houses;
+  houseId: string | null = null; // Allow houseId to be null
+  houseDetails: Houses | null = null; // House details will be fetched based on houseId
 
   constructor(
     private route: ActivatedRoute,
@@ -21,19 +22,16 @@ export class HouseDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const houseId = +params['id'];
+    this.houseId = this.route.snapshot.paramMap.get('id');
+    if (this.houseId) {
+      this.fetchHouseDetails(this.houseId);
+    }
+  }
 
-      if (houseId) {
-        this.allHousesService.getHouseById(houseId).subscribe({
-          next: house => {
-            this.house = house;
-            console.log('House with apartments:', house);
-          },
-          error: err => console.error(err)
-        });
-      }
-    });
+  fetchHouseDetails(id: string): void {
+    this.allHousesService.getHouseById(id).subscribe(
+      (data: Houses) => this.houseDetails = data,
+      error => console.error('Error fetching house details', error)
+    );
   }
 }
-// testing
