@@ -1,16 +1,48 @@
 <!-- house-detail.component.html -->
-<p>house detail works</p>
-<div *ngIf="house">
-  <h2>House Details</h2>
-  <p><strong>House Number:</strong> {{ house.number }}</p>
-  <p><strong>Street:</strong> {{ house.street }}</p>
-  <p><strong>City:</strong> {{ house.city }}</p>
-  <p><strong>Country:</strong> {{ house.country }}</p>
-  <p><strong>Postcode:</strong> {{ house.postcode }}</p>
 
-  <!-- Add edit functionality or other details here -->
-</div>
+<div class="container mt-4">
+  <div *ngIf="house">
+    <h2>House Details</h2>
 
-<div *ngIf="!house">
-  <p>Loading house details...</p>
+    <!-- House Details Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <tbody>
+        <tr>
+          <td class="fw-bold">House Number:</td>
+          <td>{{ house.number }}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Street:</td>
+          <td>{{ house.street }}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold">City:</td>
+          <td>{{ house.city }}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Country:</td>
+          <td>{{ house.country }}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Postcode:</td>
+          <td>{{ house.postcode }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- List of Apartments -->
+    <div class="mt-4">
+      <h3>Apartments Assigned to This House</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let apartment of house.apartments">
+          Apartment Number: {{ apartment.number }} - Floor: {{ apartment.floor }}
+        </li>
+      </ul>
+    </div>
+
+  <div *ngIf="!house">
+    <p>Loading house details...</p>
+  </div>
 </div>

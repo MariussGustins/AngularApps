@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';  // Import CommonModule
+import { CommonModule } from '@angular/common';
 import { AllHousesService } from '../all-houses.service';
 import { Houses } from '../allHouses.interface';
 import {RouterLink} from "@angular/router";
@@ -7,7 +7,7 @@ import {RouterLink} from "@angular/router";
 @Component({
   selector: 'app-all-houses',
   standalone: true,
-  imports: [CommonModule, RouterLink],  // Add CommonModule here
+  imports: [CommonModule, RouterLink],
   templateUrl: './all-houses.component.html',
   styleUrls: ['./all-houses.component.css']
 })

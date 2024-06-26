@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Houses } from './allHouses.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,17 @@ export class AllHousesService {
   getAllHouses(): Observable<Houses[]> {
     return this.http.get<Houses[]>(`${this.baseUrl}/Houses`);
   }
-  getHouseById(id: string): Observable<Houses> {
-    return this.http.get<Houses>(`${this.baseUrl}/Houses/${id}`);
+  getHouseById(id: number): Observable<Houses> {
+    return this.http.get<Houses>(`${this.baseUrl}/Houses/${id}`).pipe(
+      map((data: any) => ({
+        id: data.id,
+        number: data.number,
+        street: data.street,
+        city: data.city,
+        country: data.country,
+        postcode: data.postcode,
+        apartments: data.apartments
+      }))
+    );
   }
 }
