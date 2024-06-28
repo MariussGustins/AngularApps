@@ -34,7 +34,10 @@ export class AllHousesService {
   getResidentsByApartmentId(apartmentId: string): Observable<Resident[]> {
     return this.http.get<Resident[]>(`${this.baseUrl}/Apartments/${apartmentId}/Residents?apartmentId=${apartmentId}`);
   }
-  updateHouse(id: string, house: Houses): Observable<void> { 
+  updateHouse(id: string, house: Houses): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/Houses/${id}`, house);
+  }
+  updateApartment(id: string, apartment: Apartment): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/Apartments/${id}`, apartment);
   }
 }

@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './house-detail.component.html',
-  styleUrls: ['./house-detail.component.css'] 
+  styleUrls: ['./house-detail.component.css']
 })
 export class HouseDetailComponent implements OnInit {
   houseId: string = '';
@@ -28,7 +28,7 @@ export class HouseDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.houseId = id; 
+      this.houseId = id;
       this.fetchHouseDetails(this.houseId);
       this.fetchAllApartments();
       this.fetchApartmentsByHouseId(this.houseId);
@@ -57,15 +57,15 @@ export class HouseDetailComponent implements OnInit {
       (error: any) => console.error('Error fetching apartments by house id', error)
     );
   }
-  editHouseDetails(): void { 
+  editHouseDetails(): void {
     this.editing = true;
   }
 
-  cancelEdit(): void { 
+  cancelEdit(): void {
     this.editing = false;
   }
 
-  onSubmit(): void { 
+  onSubmit(): void {
     this.allHousesService.updateHouse(this.houseId, this.houseDetails).subscribe(
       () => {
         this.editing = false;
