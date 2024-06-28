@@ -4,11 +4,12 @@ import { AllHousesService } from '../all-houses.service';
 import { Houses, Apartment } from '../allHouses.interface';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-house-detail',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './house-detail.component.html',
   styleUrls: ['./house-detail.component.css'] 
 })
@@ -17,6 +18,7 @@ export class HouseDetailComponent implements OnInit {
   houseDetails!: Houses;
   houseApartments: Apartment[] = [];
   allApartments: Apartment[] = [];
+  editing: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +55,23 @@ export class HouseDetailComponent implements OnInit {
     this.allHousesService.getApartmentsByHouseId(houseId).subscribe(
       (data: Apartment[]) => this.houseApartments = data,
       (error: any) => console.error('Error fetching apartments by house id', error)
+    );
+  }
+  editHouseDetails(): void { 
+    this.editing = true;
+  }
+
+  cancelEdit(): void { 
+    this.editing = false;
+  }
+
+  onSubmit(): void { 
+    this.allHousesService.updateHouse(this.houseId, this.houseDetails).subscribe(
+      () => {
+        this.editing = false;
+        this.fetchHouseDetails(this.houseId);
+      },
+      (error: any) => console.error('Error updating house details', error)
     );
   }
 }
