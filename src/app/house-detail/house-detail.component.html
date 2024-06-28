@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <div *ngIf="houseDetails">
     <h2>House Details</h2>
-    <button (click)="editHouseDetails()">Edit</button>
+    
 
     <div class="table-responsive">
       <table class="table table-bordered">
@@ -28,6 +28,7 @@
           </tr>
         </tbody>
       </table>
+      <button (click)="editHouseDetails()" class="btn btn-outline-dark">Edit</button>
     </div>
 
     <div class="mt-4">
@@ -58,7 +59,7 @@
   <div *ngIf="!houseDetails">
     <p>Loading house details...</p>
   </div>
-  
+
   <div *ngIf="editing">
     <h2>Edit House Details</h2>
     <form (ngSubmit)="onSubmit()" #houseForm="ngForm">
