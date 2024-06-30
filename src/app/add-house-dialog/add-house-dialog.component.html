@@ -1,0 +1,29 @@
+<h2 class="modal-title">Add New House</h2>
+<div class="modal-body">
+  <form>
+    <div class="mb-3">
+      <label for="number" class="form-label">House Number:</label>
+      <input type="text" id="number" [(ngModel)]="newHouse.number" name="number" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label for="street" class="form-label">Street:</label>
+      <input type="text" id="street" [(ngModel)]="newHouse.street" name="street" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label for="city" class="form-label">City:</label>
+      <input type="text" id="city" [(ngModel)]="newHouse.city" name="city" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label for="country" class="form-label">Country:</label>
+      <input type="text" id="country" [(ngModel)]="newHouse.country" name="country" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label for="postcode" class="form-label">Postcode:</label>
+      <input type="text" id="postcode" [(ngModel)]="newHouse.postcode" name="postcode" class="form-control" required />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" (click)="onSave()">Save</button>
+  <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+</div>
