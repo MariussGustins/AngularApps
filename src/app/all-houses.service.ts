@@ -49,4 +49,10 @@ export class AllHousesService {
   deleteHouse(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/Houses/${id}`);
   }
+  deleteApartment(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/Apartments/${id}`);
+  }
+  addApartment(apartment: Apartment): Observable<Apartment> {
+    return this.http.post<Apartment>(`${this.baseUrl}/Apartments`, apartment);
+  }
 }

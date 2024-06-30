@@ -5,6 +5,8 @@ import { Houses, Apartment } from '../allHouses.interface';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {AddApartmentDialogComponent} from "../add-apartment-dialog/add-apartment-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-house-detail',
@@ -22,7 +24,8 @@ export class HouseDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private allHousesService: AllHousesService
+    private allHousesService: AllHousesService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -74,4 +77,37 @@ export class HouseDetailComponent implements OnInit {
       (error: any) => console.error('Error updating house details', error)
     );
   }
+
+  deleteApartment(id: number): void {
+    if (confirm('Are you sure you want to delete this apartment?')) {
+      this.allHousesService.deleteApartment(id.toString()).subscribe({
+        next: () => {
+          this.fetchAllApartments();
+        },
+        error: (error) => {
+          console.error('Error deleting house:', error);
+        }
+      });
+    }
+  }
+  openAddApartmentDialog(): void {
+    const dialogRef = this.dialog.open(AddApartmentDialogComponent, {
+      width: '500px',
+      data: { houseId: this.houseId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.allHousesService.getAllApartments().subscribe({
+          next: (apartment) => {
+            this.allApartments = apartment;
+          },
+          error: (error) => {
+            console.error('Error fetching apartments:', error);
+          }
+        });
+      }
+    });
+  }
 }
+

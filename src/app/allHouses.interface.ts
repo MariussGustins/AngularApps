@@ -9,7 +9,7 @@ export interface Houses{
 }
 
 export interface Apartment {
-  id: string;
+  id: number;
   number: string;
   floor: number;
   rooms: number;
@@ -17,6 +17,7 @@ export interface Apartment {
   fullArea: number;
   livingArea: number;
   primaryResidentId: number;
+  houseId: number;
   residents: Resident[];
 
 }

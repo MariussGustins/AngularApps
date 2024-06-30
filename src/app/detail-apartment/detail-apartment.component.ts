@@ -18,7 +18,7 @@ import { EditResidentDialogComponent } from '../edit-resident-dialog/edit-reside
 export class DetailApartmentComponent implements OnInit {
   apartment: Apartment | null = null;
   editApartment: Apartment = {
-    id: '',
+    id: 0,
     number: '',
     floor: 0,
     rooms: 0,
@@ -26,6 +26,7 @@ export class DetailApartmentComponent implements OnInit {
     fullArea: 0,
     livingArea: 0,
     primaryResidentId: 0,
+    houseId: 0,
     residents: []
   };
   apartmentResidents: Resident[] = [];

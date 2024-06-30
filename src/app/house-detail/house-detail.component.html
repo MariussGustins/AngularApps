@@ -59,7 +59,7 @@
       </form>
     </div>
   </div>
-
+  <button class="btn btn-primary mb-3" (click)="openAddApartmentDialog()">Add New Apartment</button>
     <div class="mt-4">
       <h3>Apartments Assigned to This House</h3>
       <div *ngIf="houseApartments.length > 0; else noApartments">
@@ -75,7 +75,9 @@
           <tr *ngFor="let apartment of houseApartments">
             <td>{{ apartment.number }}</td>
             <td>{{ apartment.floor }}</td>
-            <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" [routerLink]="['/apartment', apartment.id]">View Details</a></td>
+            <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" [routerLink]="['/apartment', apartment.id]">View Details</a>
+              <button class="btn btn-danger ms-2" (click)="deleteApartment(apartment.id)">Delete</button>
+            </td>
           </tr>
           </tbody>
         </table>
