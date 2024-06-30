@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Apartment, Resident } from '../allHouses.interface';
+import {Apartment, Houses, Resident} from '../allHouses.interface';
 import { AllHousesService } from '../all-houses.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { EditResidentDialogComponent } from '../edit-resident-dialog/edit-resident-dialog.component';
 
 @Component({
   selector: 'app-detail-apartment',
@@ -32,7 +34,8 @@ export class DetailApartmentComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private allHousesService: AllHousesService
+    private allHousesService: AllHousesService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -83,5 +86,17 @@ export class DetailApartmentComponent implements OnInit {
         }
       );
     }
+  }
+  openEditDialog(resident: Resident): void {
+    const dialogRef = this.dialog.open(EditResidentDialogComponent, {
+      width: '400px',
+      data: resident
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.fetchResidentsByApartmentId(this.apartmentId!);
+      }
+    });
   }
 }

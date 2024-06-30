@@ -62,31 +62,35 @@
   </form>
 
 
-<div class="mt-4">
+  <div class="mt-4">
     <h3>Residents</h3>
     <div *ngIf="apartmentResidents.length > 0; else noResidents">
       <table class="table">
         <thead class="table-dark">
-          <tr>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Personal Number</th>
-            <th>Birthday</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Is Owner</th>
-          </tr>
+        <tr>
+          <th>Name</th>
+          <th>Last Name</th>
+          <th>Personal Number</th>
+          <th>Birthday</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+          <th>Is Owner</th>
+          <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let resident of apartmentResidents">
-            <td>{{ resident.name }}</td>
-            <td>{{ resident.lastName }}</td>
-            <td>{{ resident.personalNumber }}</td>
-            <td>{{ resident.birthday }}</td>
-            <td>{{ resident.phoneNumber }}</td>
-            <td>{{ resident.email }}</td>
-            <td>{{ resident.isOwner }}</td>
-          </tr>
+        <tr *ngFor="let resident of apartmentResidents">
+          <td>{{ resident.name }}</td>
+          <td>{{ resident.lastName }}</td>
+          <td>{{ resident.personalNumber }}</td>
+          <td>{{ resident.birthday }}</td>
+          <td>{{ resident.phoneNumber }}</td>
+          <td>{{ resident.email }}</td>
+          <td>{{ resident.isOwner }}</td>
+          <td>
+          <button class="btn btn-outline-dark" (click)="openEditDialog(resident)">Edit</button>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -94,7 +98,7 @@
       <p>No residents assigned to this apartment.</p>
     </ng-template>
   </div>
-
-<div *ngIf="!apartment">
-  <p>Loading apartment details...</p>
 </div>
+  <div *ngIf="!apartment">
+    <p>Loading apartment details...</p>
+  </div>
