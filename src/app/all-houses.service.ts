@@ -61,4 +61,7 @@ export class AllHousesService {
   getAllResidents(): Observable<Resident[]> {
     return this.http.get<Resident[]>(`${this.baseUrl}/Residents`);
   }
+  deleteResident(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/Residents/${id}`);
+  }
 }

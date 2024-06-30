@@ -89,6 +89,19 @@ export class DetailApartmentComponent implements OnInit {
       );
     }
   }
+
+  deleteResident(id: number): void {
+    if(confirm('Are you sure you want to delete this resident?')) {
+      this.allHousesService.deleteResident(id.toString()).subscribe({
+        next:() => {
+          this.fetchResidentsByApartmentId(this.apartmentId);
+        },
+        error: (error) => {
+          console.error('Error deleting resident', error);
+        }
+      });
+    }
+  }
   openEditDialog(resident: Resident): void {
     const dialogRef = this.dialog.open(EditResidentDialogComponent, {
       width: '400px',

@@ -89,6 +89,7 @@
           <td>{{ resident.isOwner }}</td>
           <td>
           <button class="btn btn-outline-dark" (click)="openEditDialog(resident)">Edit</button>
+            <button class="btn btn-danger ms-2" (click)="deleteResident(resident.id)">Delete</button>
           </td>
         </tr>
         </tbody>
