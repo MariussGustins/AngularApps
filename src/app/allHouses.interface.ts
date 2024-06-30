@@ -23,7 +23,7 @@ export interface Apartment {
 }
 
 export interface Resident{
-  id:string;
+  id:number;
   name:string;
   lastName:string;
   personalNumber:string;
@@ -31,4 +31,5 @@ export interface Resident{
   phoneNumber: number;
   email:string;
   isOwner: boolean;
+  apartmentId: number;
 }

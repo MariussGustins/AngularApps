@@ -55,4 +55,10 @@ export class AllHousesService {
   addApartment(apartment: Apartment): Observable<Apartment> {
     return this.http.post<Apartment>(`${this.baseUrl}/Apartments`, apartment);
   }
+  addResident(resident: Resident): Observable<Resident> {
+    return this.http.post<Resident>(`${this.baseUrl}/Residents`, resident);
+  }
+  getAllResidents(): Observable<Resident[]> {
+    return this.http.get<Resident[]>(`${this.baseUrl}/Residents`);
+  }
 }

@@ -61,7 +61,7 @@
     <button type="button" class="btn btn-secondary" (click)="toggleEditMode()">Cancel</button>
   </form>
 
-
+  <button class="btn btn-primary mb-3" (click)="openAddResidentDialog()">Add New resident</button>
   <div class="mt-4">
     <h3>Residents</h3>
     <div *ngIf="apartmentResidents.length > 0; else noResidents">

@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditResidentDialogComponent } from '../edit-resident-dialog/edit-resident-dialog.component';
+import { AddResidentDialogComponent } from '../add-resident-dialog/add-resident-dialog.component';
 
 @Component({
   selector: 'app-detail-apartment',
@@ -30,7 +31,7 @@ export class DetailApartmentComponent implements OnInit {
     residents: []
   };
   apartmentResidents: Resident[] = [];
-  apartmentId: string | null = null;
+  apartmentId: string = '';
   isEditMode: boolean = false;
 
   constructor(
@@ -52,7 +53,7 @@ export class DetailApartmentComponent implements OnInit {
     this.allHousesService.getApartmentById(id).subscribe(
       (data: Apartment) => {
         this.apartment = data;
-        this.editApartment = { ...data }; // Initialize the edit form with current apartment data
+        this.editApartment = { ...data };
       },
       (error: any) => {
         console.error('Error fetching apartment details', error);
@@ -97,6 +98,25 @@ export class DetailApartmentComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.fetchResidentsByApartmentId(this.apartmentId!);
+      }
+    });
+  }
+  openAddResidentDialog(): void {
+    const dialogRef = this.dialog.open(AddResidentDialogComponent, {
+      width: '500px',
+      data: { apartmentId: this.apartmentId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.allHousesService.getAllResidents().subscribe({
+          next: (resident) => {
+            this.apartmentResidents = resident;
+          },
+          error: (error) => {
+            console.error('Error fetching residents:', error);
+          }
+        });
       }
     });
   }

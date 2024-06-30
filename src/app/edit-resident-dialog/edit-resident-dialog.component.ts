@@ -23,7 +23,7 @@ export class EditResidentDialogComponent {
   }
 
   onSave(): void {
-    this.allHousesService.updateResident(this.resident.id, this.resident).subscribe(
+    this.allHousesService.updateResident(this.resident.id.toString(), this.resident).subscribe(
       () => {
         this.dialogRef.close(this.resident);
       },
