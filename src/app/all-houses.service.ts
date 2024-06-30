@@ -46,4 +46,7 @@ export class AllHousesService {
   addHouse(house: Houses): Observable<Houses> {
     return this.http.post<Houses>(`${this.baseUrl}/Houses`, house);
   }
+  deleteHouse(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/Houses/${id}`);
+  }
 }

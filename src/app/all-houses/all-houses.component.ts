@@ -31,6 +31,7 @@ export class AllHousesComponent implements OnInit {
       }
     });
   }
+
   openAddHouseDialog(): void {
     const dialogRef = this.dialog.open(AddHouseDialogComponent, {
       width: '500px'
@@ -48,5 +49,17 @@ export class AllHousesComponent implements OnInit {
         });
       }
     });
+  }
+  deleteHouse(id: number): void {  // id is a number
+    if (confirm('Are you sure you want to delete this house?')) {
+      this.allHousesService.deleteHouse(id.toString()).subscribe({  // Convert id to string
+        next: () => {
+          this.ngOnInit();
+        },
+        error: (error) => {
+          console.error('Error deleting house:', error);
+        }
+      });
+    }
   }
 }
