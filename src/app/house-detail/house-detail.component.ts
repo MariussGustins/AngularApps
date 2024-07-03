@@ -7,11 +7,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {AddApartmentDialogComponent} from "../add-apartment-dialog/add-apartment-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import { NavbarComponent } from '../navbar/navbar.component';
+import {AuthService} from "@auth0/auth0-angular";
+
 
 @Component({
   selector: 'app-house-detail',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule, NavbarComponent],
   templateUrl: './house-detail.component.html',
   styleUrls: ['./house-detail.component.css']
 })
@@ -25,7 +28,8 @@ export class HouseDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private allHousesService: AllHousesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public auth: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +50,7 @@ export class HouseDetailComponent implements OnInit {
       (error: any) => console.error('Error fetching house details', error)
     );
   }
+
 
   fetchAllApartments(): void {
     this.allHousesService.getAllApartments().subscribe(

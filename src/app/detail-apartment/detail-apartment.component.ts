@@ -8,11 +8,13 @@ import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditResidentDialogComponent } from '../edit-resident-dialog/edit-resident-dialog.component';
 import { AddResidentDialogComponent } from '../add-resident-dialog/add-resident-dialog.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+
 
 @Component({
   selector: 'app-detail-apartment',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NavbarComponent],
   templateUrl: './detail-apartment.component.html',
   styleUrls: ['./detail-apartment.component.css']
 })

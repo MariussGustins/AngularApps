@@ -1,6 +1,8 @@
+<app-navbar></app-navbar>
+
 <h1>All houses registered to database</h1>
-<div>
-  <button class="btn btn-primary mb-3" (click)="openAddHouseDialog()">Add New House</button>
+<div *ngIf="auth.isAuthenticated$ | async">
+  <button *ngIf="isManager" class="btn btn-primary mb-3" (click)="openAddHouseDialog()">Add New House</button>
   <table class="table">
     <thead class="table-dark">
     <tr>
@@ -18,10 +20,14 @@
       <td>{{ house.street }}</td>
       <td>{{ house.city }}</td>
       <td>{{ house.country }}</td>
-        <td>{{ house.postcode }}</td>
-        <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" [routerLink]="['/house', house.id]">View Details</a>
-          <button class="btn btn-danger ms-2" (click)="deleteHouse(house.id)">Delete</button>
-        </td>    </tr>
+      <td>{{ house.postcode }}</td>
+      <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" [routerLink]="['/house', house.id]">View Details</a>
+        <button class="btn btn-danger ms-2" *ngIf="isManager" (click)="deleteHouse(house.id)">Delete</button>
+      </td>
+    </tr>
     </tbody>
   </table>
+</div>
+<div *ngIf="!(auth.isAuthenticated$ | async)">
+  <p>Please log in to see the houses.</p>
 </div>
