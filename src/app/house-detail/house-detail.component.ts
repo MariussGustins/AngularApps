@@ -24,6 +24,7 @@ export class HouseDetailComponent implements OnInit {
   houseApartments: Apartment[] = [];
   allApartments: Apartment[] = [];
   editing: boolean = false;
+  isManager = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,13 +34,16 @@ export class HouseDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.auth.isAuthenticated$.subscribe(isAuthenticated => {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.houseId = id;
       this.fetchHouseDetails(this.houseId);
       this.fetchAllApartments();
       this.fetchApartmentsByHouseId(this.houseId);
+      this.checkUserRole();
     }
+    });
   }
 
   fetchHouseDetails(id: string): void {
@@ -49,6 +53,13 @@ export class HouseDetailComponent implements OnInit {
       },
       (error: any) => console.error('Error fetching house details', error)
     );
+  }
+
+  checkUserRole() {
+    this.auth.user$.subscribe(user => {
+      const roles = user?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/roles'] || [];
+      this.isManager = roles.includes('Manager');
+    });
   }
 
 

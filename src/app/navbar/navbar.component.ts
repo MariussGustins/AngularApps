@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
-import {AsyncPipe} from "@angular/common";
-import {CommonModule} from "@angular/common";
+import {AuthService, User} from '@auth0/auth0-angular';
+import { AsyncPipe } from "@angular/common";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +18,11 @@ export class NavbarComponent {
 
   login() {
     this.auth.loginWithRedirect();
+  }
+  getRole(user: User | null | undefined): string {
+    // Check if user and user roles exist
+    const roles = user?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/roles'];
+    return roles && roles.length > 0 ? roles[0] : 'User';
   }
 
   logout() {

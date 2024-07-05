@@ -11,15 +11,15 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideAuth0({
       domain: 'dev-dan42zmue7a65nbf.us.auth0.com',
-      clientId: 'dRotMUVOU4xC2iamMhjgBRVrwbwCBiHE',
+      clientId: '3g4JsP8cndDYiM6Hygdv84wgdYeBqq8Z',
       authorizationParams: {
-        audience: 'http://localhost:4200',
+        audience: 'http://localhost:5042/api',
         redirect_uri: window.location.origin
       },
       httpInterceptor: {
         allowedList: [
           {
-            uri: 'http://localhost:4200'
+            uri: 'http://localhost:5042/api/*',
           }
         ]
       }

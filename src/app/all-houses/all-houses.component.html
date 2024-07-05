@@ -1,33 +1,42 @@
 <app-navbar></app-navbar>
 
-<h1>All houses registered to database</h1>
-<div *ngIf="auth.isAuthenticated$ | async">
-  <button *ngIf="isManager" class="btn btn-primary mb-3" (click)="openAddHouseDialog()">Add New House</button>
-  <table class="table">
-    <thead class="table-dark">
-    <tr>
-      <th scope="col">House Number</th>
-      <th scope="col">Street</th>
-      <th scope="col">City</th>
-      <th scope="col">Country</th>
-      <th scope="col">Postcode</th>
-      <th scope="col">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let house of houses">
-      <td>{{ house.number }}</td>
-      <td>{{ house.street }}</td>
-      <td>{{ house.city }}</td>
-      <td>{{ house.country }}</td>
-      <td>{{ house.postcode }}</td>
-      <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" [routerLink]="['/house', house.id]">View Details</a>
-        <button class="btn btn-danger ms-2" *ngIf="isManager" (click)="deleteHouse(house.id)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-<div *ngIf="!(auth.isAuthenticated$ | async)">
-  <p>Please log in to see the houses.</p>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col">
+      <h2 class="mb-4">List of All Registered Houses</h2>
+    </div>
+    <div class="col text-end">
+      <ng-container *ngIf="auth.isAuthenticated$ | async">
+        <button *ngIf="isManager" class="btn btn-primary mb-3" (click)="openAddHouseDialog()">Add New House</button>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="auth.isAuthenticated$ | async; else notAuthenticated">
+    <table class="table table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th scope="col">House Number</th>
+        <th scope="col">Location</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let house of houses">
+        <td>{{ house.number }}</td>
+        <td>{{ house.street }}, {{ house.city }}, {{ house.country }} {{ house.postcode }}</td>
+        <td>
+          <a class="btn btn-outline-primary btn-sm me-2" [routerLink]="['/house', house.id]">View Details</a>
+          <button *ngIf="isManager" class="btn btn-outline-danger btn-sm" (click)="deleteHouse(house.id)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #notAuthenticated>
+    <div class="alert alert-info" role="alert">
+      Please log in to see the houses.
+    </div>
+  </ng-template>
 </div>

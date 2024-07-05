@@ -48,9 +48,12 @@ export class AllHousesComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching houses:', error);
+        alert('Failed to fetch houses. Please check your permissions or try again.');
       }
     });
   }
+
+
 
   checkUserRole() {
     this.auth.user$.subscribe(user => {

@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+
 <div class="container mt-4" *ngIf="apartment">
   <h2>Apartment Details</h2>
   <div class="table-responsive">
@@ -29,7 +31,7 @@
       </tr>
       </tbody>
     </table>
-    <button class="btn btn-outline-dark" (click)="toggleEditMode()">Edit</button>
+    <button class="btn btn-outline-primary btn-sm me-2" *ngIf="isManager" (click)="toggleEditMode()">Edit</button>
   </div>
 
   <form *ngIf="isEditMode && editApartment" (ngSubmit)="updateApartment()">
@@ -61,7 +63,7 @@
     <button type="button" class="btn btn-secondary" (click)="toggleEditMode()">Cancel</button>
   </form>
 
-  <button class="btn btn-primary mb-3" (click)="openAddResidentDialog()">Add New resident</button>
+  <button class="btn btn-primary mb-3" *ngIf="isManager" (click)="openAddResidentDialog()">Add New resident</button>
   <div class="mt-4">
     <h3>Residents</h3>
     <div *ngIf="apartmentResidents.length > 0; else noResidents">
@@ -88,8 +90,8 @@
           <td>{{ resident.email }}</td>
           <td>{{ resident.isOwner }}</td>
           <td>
-          <button class="btn btn-outline-dark" (click)="openEditDialog(resident)">Edit</button>
-            <button class="btn btn-danger ms-2" (click)="deleteResident(resident.id)">Delete</button>
+          <button class="btn btn-outline-primary btn-sm me-2" (click)="openEditDialog(resident)">Edit</button>
+            <button class="btn btn-outline-danger btn-sm" *ngIf="isManager" (click)="deleteResident(resident.id)">Delete</button>
           </td>
         </tr>
         </tbody>

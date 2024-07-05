@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditResidentDialogComponent } from '../edit-resident-dialog/edit-resident-dialog.component';
 import { AddResidentDialogComponent } from '../add-resident-dialog/add-resident-dialog.component';
 import { NavbarComponent } from '../navbar/navbar.component';
+import {AuthService} from "@auth0/auth0-angular";
+
 
 
 @Component({
@@ -35,20 +37,25 @@ export class DetailApartmentComponent implements OnInit {
   apartmentResidents: Resident[] = [];
   apartmentId: string = '';
   isEditMode: boolean = false;
+  isManager = false;
 
   constructor(
     private route: ActivatedRoute,
     private allHousesService: AllHousesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public auth: AuthService,
   ) { }
 
   ngOnInit(): void {
+    this.auth.isAuthenticated$.subscribe(isAuthenticated => {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.apartmentId = id;
       this.fetchApartmentDetails(this.apartmentId);
       this.fetchResidentsByApartmentId(this.apartmentId);
+      this.checkUserRole();
     }
+    });
   }
 
   fetchApartmentDetails(id: string): void {
@@ -61,6 +68,13 @@ export class DetailApartmentComponent implements OnInit {
         console.error('Error fetching apartment details', error);
       }
     );
+  }
+
+  checkUserRole() {
+    this.auth.user$.subscribe(user => {
+      const roles = user?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/roles'] || [];
+      this.isManager = roles.includes('Manager');
+    });
   }
 
   fetchResidentsByApartmentId(apartmentId: string): void {

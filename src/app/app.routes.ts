@@ -3,6 +3,7 @@ import { AllHousesComponent } from './all-houses/all-houses.component';
 import { HouseDetailComponent } from './house-detail/house-detail.component';
 import { DetailApartmentComponent } from './detail-apartment/detail-apartment.component';
 import { AuthGuard } from '@auth0/auth0-angular';
+// import { AuthGuard } from './auth.guard';
 
 
 export const routes: Routes = [
