@@ -1,3 +1,17 @@
+# Login information
+Username:Manager
+Password:admin123!
+
+Username:Resident
+Password:resident123!
+
+# Alert(if nothing shows)
+
+I use Microsoft azure for database, and the firewall doesn't include your ip adress!
+
+
+
+
 # AngularApps
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.5.
