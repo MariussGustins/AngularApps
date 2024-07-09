@@ -27,13 +27,20 @@ export class AllHousesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Check if the user is authenticated
     this.auth.isAuthenticated$.subscribe(isAuthenticated => {
       if (isAuthenticated) {
-        // Fetch houses if authenticated
-        this.fetchHouses();
-        // Check user role
         this.checkUserRole();
+        this.auth.user$.subscribe(user => {
+          if (this.isManager) {
+            this.fetchHouses();
+          } else {
+            if (user?.email) {
+              this.fetchResidentHouseAndApartment(user.email);
+            } else {
+              console.error('User ID is undefined');
+            }
+          }
+        });
       } else {
         this.houses = [];
       }
@@ -52,6 +59,20 @@ export class AllHousesComponent implements OnInit {
       }
     });
   }
+
+  fetchResidentHouseAndApartment(email: string) {
+    this.allHousesService.getHouseByEmail(email).subscribe({
+      next: (house) => {
+        this.houses = [house];
+        console.log('Received resident house:', house);
+      },
+      error: (error) => {
+        console.error('Error fetching resident house:', error);
+        alert('Failed to fetch resident house. Please check your permissions or try again.');
+      }
+    });
+  }
+
 
 
 

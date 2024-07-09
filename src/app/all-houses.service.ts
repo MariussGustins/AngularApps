@@ -64,4 +64,12 @@ export class AllHousesService {
   deleteResident(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/Residents/${id}`);
   }
+  getApartmentsByUserId(userId: string): Observable<Apartment[]> {
+    return this.http.get<Apartment[]>(`${this.baseUrl}/Users/${userId}/apartments`);
+  }
+
+  getHouseByEmail(email: string): Observable<Houses> {
+    return this.http.get<Houses>(`${this.baseUrl}/Houses/${email}/house`);
+  }
+
 }
