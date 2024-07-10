@@ -32,4 +32,6 @@ export interface Resident{
   email:string;
   isOwner: boolean;
   apartmentId: number;
+  username:string;
+  password:string;
 }

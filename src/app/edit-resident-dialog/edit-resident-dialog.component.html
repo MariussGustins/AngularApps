@@ -29,6 +29,14 @@
       <input type="checkbox" id="isOwner" [(ngModel)]="resident.isOwner" name="isOwner" class="form-check-input" />
       <label for="isOwner" class="form-check-label">Is Owner</label>
     </div>
+    <div class="mb-3">
+      <label for="username" class="form-label">Username:</label>
+      <input type="text" id="username" [(ngModel)]="resident.username" name="username" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password:</label>
+      <input type="password" id="password" [(ngModel)]="resident.password" name="password" class="form-control" required />
+    </div>
   </form>
 </div>
 <div class="modal-footer">

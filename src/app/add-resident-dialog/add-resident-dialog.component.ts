@@ -21,7 +21,9 @@ export class AddResidentDialogComponent {
     phoneNumber: 0,
     email: '',
     isOwner: true,
-    apartmentId: this.data.apartmentId
+    apartmentId: this.data.apartmentId,
+    username: '',
+    password: ''
   };
 
   constructor(

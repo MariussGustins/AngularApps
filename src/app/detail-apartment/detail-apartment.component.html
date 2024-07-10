@@ -77,6 +77,8 @@
           <th>Phone Number</th>
           <th>Email</th>
           <th>Is Owner</th>
+          <th>Username</th>
+          <th>Password</th>
           <th>Action</th>
         </tr>
         </thead>
@@ -89,9 +91,11 @@
           <td>{{ resident.phoneNumber }}</td>
           <td>{{ resident.email }}</td>
           <td>{{ resident.isOwner }}</td>
+          <td>{{ resident.username }}</td>
+          <td>{{ resident.password }}</td>
           <td>
           <button class="btn btn-outline-primary btn-sm me-2" (click)="openEditDialog(resident)">Edit</button>
-            <button class="btn btn-outline-danger btn-sm" *ngIf="isManager" (click)="deleteResident(resident.id)">Delete</button>
+            <button class="btn btn-outline-danger btn-sm" *ngIf="isManager" (click)="deleteResident(resident.id.toString())">Delete</button>
           </td>
         </tr>
         </tbody>

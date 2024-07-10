@@ -28,6 +28,14 @@
     <input type="checkbox" id="isOwner" [(ngModel)]="newResident.isOwner" name="isOwner" class="form-check-input" />
     <label for="isOwner" class="form-check-label">Is Owner</label>
   </div>
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" id="username" [(ngModel)]="newResident.username" name="username" class="form-control" required />
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" id="password" [(ngModel)]="newResident.password" name="password" class="form-control" required />
+  </div>
   <button type="submit" class="btn btn-primary">Save</button>
   <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
 </form>

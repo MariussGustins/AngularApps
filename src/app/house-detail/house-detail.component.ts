@@ -5,11 +5,10 @@ import { Houses, Apartment } from '../allHouses.interface';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {AddApartmentDialogComponent} from "../add-apartment-dialog/add-apartment-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import { AddApartmentDialogComponent } from "../add-apartment-dialog/add-apartment-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
 import { NavbarComponent } from '../navbar/navbar.component';
-import {AuthService} from "@auth0/auth0-angular";
-
+import { AuthService } from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-house-detail',
@@ -25,6 +24,7 @@ export class HouseDetailComponent implements OnInit {
   allApartments: Apartment[] = [];
   editing: boolean = false;
   isManager = false;
+  userEmail: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -35,14 +35,28 @@ export class HouseDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.isAuthenticated$.subscribe(isAuthenticated => {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.houseId = id;
-      this.fetchHouseDetails(this.houseId);
-      this.fetchAllApartments();
-      this.fetchApartmentsByHouseId(this.houseId);
-      this.checkUserRole();
-    }
+      console.log('User authenticated:', isAuthenticated);
+      if (isAuthenticated) {
+        this.auth.user$.subscribe(user => {
+          this.userEmail = user?.email || '';
+          console.log('User email:', this.userEmail);
+          this.checkUserRole(() => {
+            if (this.isManager) {
+              const id = this.route.snapshot.paramMap.get('id');
+              if (id) {
+                this.houseId = id;
+                console.log('Manager user, fetching house details for house ID:', this.houseId);
+                this.fetchHouseDetails(this.houseId);
+                this.fetchAllApartments();
+                this.fetchApartmentsByHouseId(this.houseId);
+              }
+            } else {
+              console.log('Non-manager user, fetching apartment details for user email:', this.userEmail);
+              this.fetchResidentApartment(this.userEmail);
+            }
+          });
+        });
+      }
     });
   }
 
@@ -50,32 +64,56 @@ export class HouseDetailComponent implements OnInit {
     this.allHousesService.getHouseById(id).subscribe(
       (data: Houses) => {
         this.houseDetails = data;
+        console.log('Fetched house details:', data);
       },
       (error: any) => console.error('Error fetching house details', error)
     );
   }
 
-  checkUserRole() {
+  checkUserRole(callback: () => void): void {
     this.auth.user$.subscribe(user => {
       const roles = user?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/roles'] || [];
       this.isManager = roles.includes('Manager');
+      console.log('User roles:', roles, 'Is manager:', this.isManager);
+      callback();
     });
   }
 
-
   fetchAllApartments(): void {
     this.allHousesService.getAllApartments().subscribe(
-      (data: Apartment[]) => this.allApartments = data,
+      (data: Apartment[]) => {
+        this.allApartments = data;
+        console.log('Fetched all apartments:', data);
+      },
       (error: any) => console.error('Error fetching all apartments', error)
     );
   }
 
   fetchApartmentsByHouseId(houseId: string): void {
     this.allHousesService.getApartmentsByHouseId(houseId).subscribe(
-      (data: Apartment[]) => this.houseApartments = data,
-      (error: any) => console.error('Error fetching apartments by house id', error)
+      (data: Apartment[]) => {
+        this.houseApartments = data;
+        console.log('Fetched apartments by house ID:', data);
+      },
+      (error: any) => console.error('Error fetching apartments by house ID', error)
     );
   }
+
+  fetchResidentApartment(email: string): void {
+    this.allHousesService.getApartmentByUserEmail(email).subscribe({
+      next: (apartment) => {
+        this.houseApartments = [apartment];
+        console.log('Fetched resident apartment:', apartment);
+        const houseId = apartment.houseId.toString(); // Ensure houseId is a string
+        this.fetchHouseDetails(houseId);
+      },
+      error: (error) => {
+        console.error('Error fetching resident apartment:', error);
+        alert('Failed to fetch resident apartment. Please check your permissions or try again.');
+      }
+    });
+  }
+
   editHouseDetails(): void {
     this.editing = true;
   }
@@ -101,11 +139,12 @@ export class HouseDetailComponent implements OnInit {
           this.fetchAllApartments();
         },
         error: (error) => {
-          console.error('Error deleting house:', error);
+          console.error('Error deleting apartment:', error);
         }
       });
     }
   }
+
   openAddApartmentDialog(): void {
     const dialogRef = this.dialog.open(AddApartmentDialogComponent, {
       width: '500px',
@@ -126,4 +165,3 @@ export class HouseDetailComponent implements OnInit {
     });
   }
 }
-

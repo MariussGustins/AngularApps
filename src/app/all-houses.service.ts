@@ -71,5 +71,14 @@ export class AllHousesService {
   getHouseByEmail(email: string): Observable<Houses> {
     return this.http.get<Houses>(`${this.baseUrl}/Houses/${email}/house`);
   }
+  getApartmentByUserEmail(userEmail: string): Observable<Apartment> {
+    return this.http.get<Apartment>(`${this.baseUrl}/Apartments/ByUserEmail/${userEmail}`);
+  }
+  getResidentByEmail(email: string): Observable<Resident> {
+    return this.http.get<Resident>(`${this.baseUrl}/Residents/by-email/${email}`);
+  }
+  getResidentsByApartmentIdAndEmail(apartmentId: string, email: string): Observable<Resident[]> {
+    return this.http.get<Resident[]>(`${this.baseUrl}/Residents/apartment/${apartmentId}/email/${email}`);
+  }
 
 }
