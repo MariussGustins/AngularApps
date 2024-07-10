@@ -5,6 +5,10 @@ Password:admin123!
 Username:Resident
 Password:resident123!
 
+#Login info as example(for residents)
+Username:RobertsBlite
+Password:DefaultPassword123
+
 # Alert(if nothing shows)
 
 I use Microsoft azure for database, and the firewall doesn't include your ip adress!
